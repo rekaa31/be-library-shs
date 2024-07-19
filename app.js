@@ -2,9 +2,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var ERROR_MIDDLEWARE = require('./middlewares/error.middleware');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var POOL = require('./config/db');
+
+const INDEX_ROUTES = require('./routes/index');
 
 var app = express();
 
@@ -14,7 +16,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+// Check Connection to Database
+POOL.connect((err) => {
+	if (err) {
+		return console.error('Error acquiring client', err
+		);
+	}
+	console.log('Connected to Database');
+});
+
+app.use(INDEX_ROUTES);
+
+app.use(ERROR_MIDDLEWARE);
+
 
 module.exports = app;
