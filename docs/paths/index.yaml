@@ -1,0 +1,4 @@
+# Contact API
+/contact:
+  get:
+    $ref: ./contact/contact-list.yaml

@@ -1,12 +1,11 @@
 const MEMBER = require("../models/member.model");
 
 async function index(req, res) {
-	try {
-		const result = await MEMBER.index();
-		res.json(result.rows);
-	} catch (err) {
-		throw new Error(err);
-	}
+	const result = await MEMBER.index();
+	res.json({
+		message: "GET Member API",
+		data: result.rows
+	});
 }
 
 module.exports = {
