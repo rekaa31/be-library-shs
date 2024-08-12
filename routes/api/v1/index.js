@@ -6,7 +6,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocumentJson = require('../../../docs/api-docs-v1.json');
 
 // ROUTE USING MIDDLEWARE
-router.use('/member', AUTH_MIDDLEWARE, MEMBER_ROUTER);
+router.use('/member', MEMBER_ROUTER);
 
 // ROuter for Swagger UI
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentJson));
