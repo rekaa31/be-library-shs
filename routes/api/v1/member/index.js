@@ -26,6 +26,9 @@ router.post('/', MEMBER_CONTROLLER.create);
 /* GET */
 router.get('/:id', MEMBER_CONTROLLER.show);
 
+/* GET */
+router.get('/:id/qr', MEMBER_CONTROLLER.qrMemberGenerator);
+
 
 
 module.exports = router;
