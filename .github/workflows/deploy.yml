@@ -1,23 +1,31 @@
-name: Deploy to Railway
+name: Node.js CI/CD
 
 on:
   push:
-    branches:
-      - main  # or the branch you want to deploy
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
-  deploy:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+    - name: Use Node.js 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
 
-    - name: Install Railway CLI
-      run: npm install -g railway
+    - run: npm install
+    - run: npm test
 
-    - name: Deploy to Railway
+    - name: Install Railway
+      run: npm i -g @railway/cli
+
+    - name: Deploy
+      run: railway up
       env:
         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-      run: |
-        railway up
